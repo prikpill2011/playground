@@ -43,9 +43,10 @@ it ('logs in succesfully', () => {
   }*/
 
   //Test case1- Valid loginStandard User Login 
-  // cypress/integration/example.spec.js 
-describe('SauceDemo Login', () => { 
-  it('Successful Login', () => { 
-    cy.login() 
-     })
-    })
+  Cypress.Commands.add('login', (username, password) => {
+    // login logic here
+    cy.visit('www.saucedemo.com');
+    cy.get('#user-name').type(username);
+    cy.get('#password').type(password);
+    cy.get('#login-button').click()
+  })
