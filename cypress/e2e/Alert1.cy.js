@@ -1,4 +1,4 @@
-//Alert function
+//Alert function PRiyanka
 describe('alert testing', function () {
   // test case
   it('Test Case1', function (){
