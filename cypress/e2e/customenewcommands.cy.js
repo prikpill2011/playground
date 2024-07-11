@@ -1,3 +1,4 @@
+//First Custom command
 describe('Login Tests', () => {
     it('should successfully log in', () => {
       cy.login('standard_user', 'secret_sauce');
