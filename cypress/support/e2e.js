@@ -18,3 +18,10 @@ import './commands'
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
+// cypress/e2e/login.spec.js
+describe('Login Tests', () => {
+    it('should successfully log in', () => {
+      cy.login('standard_user', 'secret_sauce');
+      cy.url().should('include', '/inventory.html'); // Check if redirected to inventory page
+    });
+  });

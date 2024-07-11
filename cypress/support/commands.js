@@ -23,3 +23,30 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+/*
+Cypress.Commands.add('login', (username, password) => {
+    // login logic here
+});
+
+it ('logs in succesfully', () => {
+    cy.login('standard_user', 'secret_sauce')
+    //add assertions here to verify that the login was succesfull
+    cy.visit('www.saucedemo.com');
+    //cy.timeout (['time-out'], 10000)
+    //cy. timeout('#username',{timeout:40000});
+   });
+    
+ 
+  export const config = {
+    pageLoadTimeout:60000 //sets the global page load timeout to 60 seconds
+  }*/
+
+  //Test case1- Valid loginStandard User Login 
+  Cypress.Commands.add('login', (username, password) => {
+    // login logic here
+    cy.visit('www.saucedemo.com');
+    cy.get('#user-name').type(username);
+    cy.get('#password').type(password);
+    cy.get('#login-button').click()
+  })
