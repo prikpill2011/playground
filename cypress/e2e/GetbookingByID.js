@@ -20,4 +20,3 @@ describe("Custom Functions for API Testing with Cypress", () => {
   });
 
 });
-*/
