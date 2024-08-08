@@ -1,0 +1,35 @@
+name: UI Test
+
+on: [push]
+branches:
+    - feature/github-actions-ecommerce
+
+jobs: 
+  ui-tests:
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+      include:
+         - os: ubuntu-latest
+           node: 14
+           test: product-listing-page.test.js
+         - os: ubuntu-latest
+           node: 14
+           test: product-details-page.test.js
+         - os: ubuntu-latest
+           node: 14
+           test: shopping-cart-functionality.test.js
+         - os: ubuntu-latest
+           node: 14
+           test: payment-gateway-integration.test.js
+    steps:
+      - name: Checkout code
+      - uses: actions/checkout@v2
+      - name: Use Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+      - run: npm ci
+      - run: npm run build --if-present
+      - run: npm test $
