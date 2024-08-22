@@ -1,0 +1,30 @@
+name: OWASP ZAP Baseline Scan
+
+on:
+  push:
+    branches:
+      - main  # Trigger on push to main branch
+  pull_request:
+    branches:
+      - main  # Trigger on pull requests to main branch
+
+jobs:
+  zap-baseline-scan:
+    name: OWASP ZAP Baseline Scan
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Run OWASP ZAP Baseline Scan
+        uses: zaproxy/action-baseline@v0.7.0
+        with:
+          target: 'https://juice-shop.herokuapp.com/'  # Target the Juice Shop website
+          cmd_options: '-t 300 --ignore-warnings -r zap_report.html'  # Timeout of 300s, ignore warnings, generate HTML report
+
+      - name: Upload ZAP report artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: zap-report
+          path: zap_report.html
