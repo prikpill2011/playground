@@ -1,35 +1,33 @@
-name: UI Test
+name: OWASP ZAP Baseline Scan
 
-on: [push]
-branches:
-    - feature/github-actions-ecommerce
+on:
+  push:
+    branches:
+      - feature-branch-name
+  pull_request:
 
-jobs: 
-  ui-tests:
-
+jobs:
+  zap-baseline-scan:
+    name: OWASP ZAP Baseline Scan
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-      include:
-         - os: ubuntu-latest
-           node: 14
-           test: product-listing-page.test.js
-         - os: ubuntu-latest
-           node: 14
-           test: product-details-page.test.js
-         - os: ubuntu-latest
-           node: 14
-           test: shopping-cart-functionality.test.js
-         - os: ubuntu-latest
-           node: 14
-           test: payment-gateway-integration.test.js
+    
     steps:
-      - name: Checkout code
-      - uses: actions/checkout@v2
-      - name: Use Node.js
-        uses: actions/setup-node@v2
+      # Checkout the code from the repository
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Run the ZAP baseline scan
+      - name: OWASP ZAP Baseline Scan
+        uses: zaproxy/action-baseline@v0.7.0
         with:
-          node-version: '14'
-      - run: npm ci
-      - run: npm run build --if-present
-      - run: npm test $
+          # Specify the target URL for the scan
+          target: 'https://juice-shop.herokuapp.com/#'
+          # Set fail on failure to true (default), but you can customize it
+          cmd_options: '-t 60 -r zap_report.html'
+        
+      # Upload the ZAP report as an artifact
+      - name: Upload ZAP Scan Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: zap-report
+          path: zap_report.html
